@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+    cat <<EOF
+
+Usage: ssh-clean <hostname>"
+
+Removes the ~/.ssh/hosts entry for the hostname and its IP address.
+
+EOF
+    exit 1
+fi
+
+ssh-keygen -R $1
+ssh-keygen -R $(host $1 |grep has |cut -f 4 -d ' ')
